@@ -4,7 +4,7 @@
 #include "BinaryTree.h"
 
 
-void* newBinaryTree(dataType data, compare_function comparison){
+void* newBinaryTree(dataType data, compare_function* comparison){
 	binary_tree* b = malloc(sizeof(binary_tree));
 	b->data = data;
 	b->left = NULL:
@@ -16,7 +16,7 @@ void* newBinaryTree(dataType data, compare_function comparison){
 }
 
 void insert(binary_tree* this, dataType data) {
-	if(this->compare(this->data, data) < 0) {
+	if(*(this->compare)(this->data, data) < 0) {
 		if(this->left != NULL) {
 			insert(this->left, data);
 		} else {
@@ -62,7 +62,7 @@ void remove(binary_tree* this, dataType data) {
 
 binary_tree* find(binary_tree* this, dataType data) {
 	if(data != NULL && this != NULL) {
-		int c = this->compare(this->data, data);
+		int c = *(this->compare)(this->data, data);
 		if(c < 0) { // data is in right subtree
 			find(this->right, data);
 		} else if(!c){ // data is root
