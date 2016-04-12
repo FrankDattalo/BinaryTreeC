@@ -10,7 +10,7 @@ typedef int (*compare_function)(dataType a, dataType b);
 typedef struct _binary_tree
 {
 	dataType data;
-	compare_function compare;
+	compare_function* compare;
 	struct _binary_tree* parent;
 	struct _binary_tree* left;
 	struct _binary_tree* right;	
@@ -19,7 +19,7 @@ typedef struct _binary_tree
 /*
 	Creates a new binary tree with root of data, and ordering property comparison.
 */
-void* newBinaryTree(dataType data, compare_function comparison);
+void* newBinaryTree(dataType data, compare_function* comparison);
 
 /*
 	Inserts data into this.
