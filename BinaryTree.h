@@ -11,9 +11,9 @@ typedef struct _binary_tree
 {
 	dataType data;
 	compare_function compare;
-	_binary_tree* parent;
-	_binary_tree* left;
-	_binary_tree* right;	
+	struct _binary_tree* parent;
+	struct _binary_tree* left;
+	struct _binary_tree* right;	
 } binary_tree;
 
 /*
