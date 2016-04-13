@@ -1,13 +1,15 @@
-#ifndef BI_TREE.C
-#define BI_TREE.C
+#ifndef BI_TREEC
+#define BI_TREEC
+
+#include <stdlib.h>
 
 #include "BinaryTree.h"
 
 
-void* newBinaryTree(dataType data, compare_function* comparison, print_fuction* printer){
-	binary_tree* b = malloc(sizeof(binary_tree));
+void* newBinaryTree(dataType data, compare_function comparison, print_fuction printer){
+	binary_tree* b = (binary_tree*) malloc(sizeof(binary_tree));
 	b->data = data;
-	b->left = NULL:
+	b->left = NULL;
 	b->right = NULL;
 	b->parent = NULL;
 	b->printer = printer;
@@ -17,11 +19,11 @@ void* newBinaryTree(dataType data, compare_function* comparison, print_fuction* 
 }
 
 void insert(binary_tree* this, dataType data) {
-	if(*(this->compare)(this->data, data) < 0) {
+	if(this->compare(this->data, data) < 0) {
 		if(this->left != NULL) {
 			insert(this->left, data);
 		} else {
-			this->left = newBinaryTree(data, NULL, this->printer);
+			this->left = (binary_tree*) newBinaryTree(data, NULL, this->printer);
 			this->left->compare = this->compare;
 			this->left->parent = this;
 		}
@@ -29,7 +31,7 @@ void insert(binary_tree* this, dataType data) {
 		if(this->right != NULL) {
 			insert(this->right, data);
 		} else {
-			this->right = newBinaryTree(data, NULL, this->printer);
+			this->right = (binary_tree*) newBinaryTree(data, NULL, this->printer);
 			this->right->compare = this->compare;
 			this->right->parent = this;
 		}
@@ -62,8 +64,8 @@ void removeNode(binary_tree* this, dataType data) {
 }
 
 binary_tree* find(binary_tree* this, dataType data) {
-	if(data != NULL && this != NULL) {
-		int c = *(this->compare)(this->data, data);
+	if(this != NULL) {
+		int c = this->compare(this->data, data);
 		if(c < 0) { // data is in right subtree
 			find(this->right, data);
 		} else if(!c){ // data is root
@@ -98,7 +100,7 @@ void inOrderWalk(binary_tree* this) {
 	if(this->left != NULL) {
 		inOrderWalk(this->left);
 	}
-	*(this->printer)(this->data);
+	this->printer(this->data);
 	if(this->right != NULL) {
 		inOrderWalk(this->right);
 	}
