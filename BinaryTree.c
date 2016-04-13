@@ -5,7 +5,6 @@
 
 #include "BinaryTree.h"
 
-
 void* newBinaryTree(dataType data, compare_function comparison, print_fuction printer){
 	binary_tree* b = (binary_tree*) malloc(sizeof(binary_tree));
 	b->data = data;
@@ -41,11 +40,17 @@ int contains(binary_tree* this, dataType data) {
 	return rem != NULL;
 }
 
-// This needs to be rewritten
 void removeNode(binary_tree* this, dataType data) {
 	binary_tree* rem = find(this, data);
 	if(rem != NULL) {
-		binary_tree* left = getLeftMostChild(rem);
+		binary_tree* left;
+		if(rem->right != NULL) {
+			left = getLeftMostChild(this->right); // get left most node in right tree
+		} else if(rem->left != NULL) {
+			left = rem->left; // get the immediate left child
+		} else {
+			left = rem; // free rem
+		}
 		if(left != rem) {
 			left->left = rem->left;
 			left->right = rem->right;
