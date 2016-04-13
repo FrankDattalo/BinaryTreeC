@@ -4,12 +4,13 @@
 #include "BinaryTree.h"
 
 
-void* newBinaryTree(dataType data, compare_function* comparison){
+void* newBinaryTree(dataType data, compare_function* comparison, print_fuction* printer){
 	binary_tree* b = malloc(sizeof(binary_tree));
 	b->data = data;
 	b->left = NULL:
 	b->right = NULL;
 	b->parent = NULL;
+	b->printer = printer;
 	if(comparison != NULL) {
 		b->compare = comparison;
 	}
@@ -20,7 +21,7 @@ void insert(binary_tree* this, dataType data) {
 		if(this->left != NULL) {
 			insert(this->left, data);
 		} else {
-			this->left = newBinaryTree(data, NULL);
+			this->left = newBinaryTree(data, NULL, this->printer);
 			this->left->compare = this->compare;
 			this->left->parent = this;
 		}
@@ -28,7 +29,7 @@ void insert(binary_tree* this, dataType data) {
 		if(this->right != NULL) {
 			insert(this->right, data);
 		} else {
-			this->right = newBinaryTree(data, NULL);
+			this->right = newBinaryTree(data, NULL, this->printer);
 			this->right->compare = this->compare;
 			this->right->parent = this;
 		}
@@ -40,7 +41,7 @@ int contains(binary_tree* this, dataType data) {
 	return rem != NULL;
 }
 
-void remove(binary_tree* this, dataType data) {
+void removeNode(binary_tree* this, dataType data) {
 	binary_tree* rem = find(this, data);
 	if(rem != NULL) {
 		binary_tree* left = getLeftMostChild(rem);
@@ -91,6 +92,16 @@ void freeTree(binary_tree* this) {
 		freeTree(this->right);
 	}
 	free(this);
+}
+
+void inOrderWalk(binary_tree* this) {
+	if(this->left != NULL) {
+		inOrderWalk(this->left);
+	}
+	*(this->printer)(this->data);
+	if(this->right != NULL) {
+		inOrderWalk(this->right);
+	}
 }
 
 #endif
