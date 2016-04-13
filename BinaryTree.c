@@ -45,11 +45,11 @@ void removeNode(binary_tree* this, dataType data) {
 	if(rem != NULL) {
 		binary_tree* left;
 		if(rem->right != NULL) {
-			left = getLeftMostChild(this->right); // get left most node in right tree
+			left = getLeftMostChild(this->right);
 		} else if(rem->left != NULL) {
-			left = rem->left; // get the immediate left child
+			left = rem->left;
 		} else {
-			left = rem; // free rem
+			left = rem;
 		}
 		if(left != rem) {
 			left->left = rem->left;
@@ -70,11 +70,11 @@ void removeNode(binary_tree* this, dataType data) {
 binary_tree* find(binary_tree* this, dataType data) {
 	if(this != NULL) {
 		int c = this->compare(this->data, data);
-		if(c < 0) { // data is in right subtree
+		if(c < 0) {
 			find(this->right, data);
-		} else if(!c){ // data is root
+		} else if(!c){
 			return this;
-		} else { // data is in left sub tree
+		} else {
 			find(this->left, data);
 		}
 	} else {
