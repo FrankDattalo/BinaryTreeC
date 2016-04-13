@@ -23,16 +23,14 @@ void insert(binary_tree* this, dataType data) {
 		if(this->left != NULL) {
 			insert(this->left, data);
 		} else {
-			this->left = (binary_tree*) newBinaryTree(data, NULL, this->printer);
-			this->left->compare = this->compare;
+			this->left = (binary_tree*) newBinaryTree(data, this->compare, this->printer);
 			this->left->parent = this;
 		}
 	} else {
 		if(this->right != NULL) {
 			insert(this->right, data);
 		} else {
-			this->right = (binary_tree*) newBinaryTree(data, NULL, this->printer);
-			this->right->compare = this->compare;
+			this->right = (binary_tree*) newBinaryTree(data, this->compare, this->printer);
 			this->right->parent = this;
 		}
 	}
@@ -43,6 +41,7 @@ int contains(binary_tree* this, dataType data) {
 	return rem != NULL;
 }
 
+// This needs to be rewritten
 void removeNode(binary_tree* this, dataType data) {
 	binary_tree* rem = find(this, data);
 	if(rem != NULL) {
