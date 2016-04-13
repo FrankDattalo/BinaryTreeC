@@ -1,5 +1,6 @@
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <time.h>
 #define dataType int
 #include "BinaryTree.h"
 
@@ -14,14 +15,17 @@ void printFunct(dataType x) {
 int main() {
 	
 	binary_tree* b = newBinaryTree(5, (void*)compare, (void*)printFunct);
-	
 
-	int i;
+	srand(time(NULL));
+	int i, x;
+	
 	for(i = 0; i < 1000; i++) {
-		insert(b, i);
+		x = rand();
+		insert(b, x);
 	}
 
 	inOrderWalk(b);
+	freeTree(b);
 
 	return 0;
 }
